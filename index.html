@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebooti.ng</title>
+    <!-- Google Font Import -->
+    <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .typing-container {
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        h1 {
+            font-family: 'Racing Sans One', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            opacity: 0.9;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            display: inline-block;
+            animation: typing 2s steps(30, end) forwards;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 19.5ch; }
+        }
+        
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        
+        .cursor {
+            width: 12px;
+            height: 2.0em;
+            background: #ffffff;
+            animation: blink 0.7s step-end infinite;
+            margin-left: 5px;
+        }
+        
+        h1 span {
+            color: #888888; /* Slightly dark gray for contrast */
+        }
+        
+        h1 strong {
+            font-weight: 700; /* Makes "Rebooti.ng?" bold */
+            color: #ffffff; /* Pure white to stand out */
+        }
+        
+        footer {
+            position: absolute;
+            bottom: 10px;
+            color: #888888;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a {
+            color: #888888;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="typing-container">
+        <h1><span>Have you tried</span> <strong>rebooti.ng?</strong></h1>
+        <div class="cursor"></div>
+    </div>
+    <footer>
+        <div class="footer-links">
+            <a href="#">About</a>
+            <!-- <a href="#">Privacy</a> -->
+            <!-- <a href="#">Terms</a> -->
+        </div>
+        <p>&copy; 2023 - <span id="year"></span> rebooti.ng</p>
+    </footer>
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
