@@ -18,11 +18,17 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            padding: 20px;
         }
         
         .typing-container {
-            display: inline-flex;
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            max-width: 100%;
+            overflow: hidden;
+            height: 100%;
         }
         
         h1 {
@@ -32,14 +38,7 @@
             opacity: 0.9;
             white-space: nowrap;
             overflow: hidden;
-            width: 0;
             display: inline-block;
-            animation: typing 2s steps(30, end) forwards;
-        }
-        
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 19.5ch; }
         }
         
         @keyframes blink {
@@ -47,8 +46,9 @@
         }
         
         .cursor {
+            display: inline-block;
             width: 12px;
-            height: 2.0em;
+            height: 0.75em;
             background: #ffffff;
             animation: blink 0.7s step-end infinite;
             margin-left: 5px;
@@ -58,9 +58,21 @@
             color: #888888; /* Slightly dark gray for contrast */
         }
         
-        h1 strong {
-            font-weight: 700; /* Makes "Rebooti.ng?" bold */
-            color: #ffffff; /* Pure white to stand out */
+        @media (max-width: 480px) {
+            h1 strong {
+				display: block;
+				width: fit-content;
+				margin: 0 auto;
+				position: relative;
+			}
+			.cursor {
+				position: relative;
+				display: inline-block;
+				width: 0px;
+				height: 0em;
+				right: 10px;
+				bottom: 0;
+			}
         }
         
         footer {
@@ -68,6 +80,9 @@
             bottom: 10px;
             color: #888888;
             font-size: 0.9rem;
+            text-align: center;
+            width: 100%;
+            padding: 10px;
         }
         
         .footer-links a {
@@ -83,8 +98,7 @@
 </head>
 <body>
     <div class="typing-container">
-        <h1><span>Have you tried</span> <strong>rebooti.ng?</strong></h1>
-        <div class="cursor"></div>
+        <h1 id="typing-text"><span class="cursor"></span></h1>
     </div>
     <footer>
         <div class="footer-links">
@@ -96,6 +110,47 @@
     </footer>
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
+
+        const textElement = document.getElementById("typing-text");
+        const cursorElement = document.querySelector(".cursor");
+        const fullText = [
+            { text: "Have you tried", tag: "span", style: "color: #888888;" },
+            { text: " ", tag: null },
+            { text: "rebooti.ng?", tag: "strong" }
+        ];
+
+        let index = 0;
+        let charIndex = 0;
+        let currentSegment = document.createElement("span");
+        textElement.insertBefore(currentSegment, cursorElement);
+
+        function typeEffect() {
+            if (index < fullText.length) {
+                let segment = fullText[index];
+
+                if (!segment.element) {
+                    segment.element = document.createElement(segment.tag || "span");
+                    if (segment.style) segment.element.style = segment.style;
+                    textElement.insertBefore(segment.element, cursorElement);
+                }
+
+                if (charIndex < segment.text.length) {
+                    segment.element.innerHTML += segment.text[charIndex];
+                    charIndex++;
+                    setTimeout(typeEffect, 40);
+                } else {
+                    index++;
+                    charIndex = 0;
+                    setTimeout(typeEffect, 40);
+                }
+            }
+        }
+
+        window.onload = () => {
+            textElement.innerHTML = "";
+            textElement.appendChild(cursorElement);
+            typeEffect();
+        };
     </script>
 </body>
 </html>
